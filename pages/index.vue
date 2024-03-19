@@ -37,7 +37,6 @@ const requestParamsCategories = {
     <!-- la dernière pépite -->
     <SectionCardViewer 
         requestId="lastPepite"
-        class="r"
         collection="Pepites" 
         :requestParams="requestParamsLastPepite" 
         :contentComponent="CardContentPepite"
