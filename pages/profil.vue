@@ -1,34 +1,22 @@
 <script setup>
-import { ref } from 'vue';
 import icons from '@/assets/icons.json';
 const { $directusBaseUrl, $logout } = useNuxtApp();
 const userState = useUserState();
 
-const gender = ref(userState.gender || '');
-const birthdate = ref(userState.birthdate || '');
-const city = ref(userState.city || '');
-const about = ref(userState.about || '');
-const favouriteFood = ref(userState.favouriteFood || '');
-const avatarFile = ref(null);
+const diet = ref(userState.diet);
 
-const handleAvatarChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        avatarFile.value = URL.createObjectURL(file);
-    }
-};
+const selectedAvararId = ref(null)
+function handleAvatarSelection() {
+    // logique pour sélectionner un nouvel avatar
+}
 
-const saveProfile = () => {
+function saveProfile() {
     // Logique pour sauvegarder le profil mis à jour
-    console.log({
-        gender: gender.value,
-        birthdate: birthdate.value,
-        city: city.value,
-        about: about.value,
-        favouriteFood: favouriteFood.value,
-        avatarFile: avatarFile.value,
-    });
 };
+
+onMounted(() => {
+    selectedAvararId.value = userState.avatarFileId
+})
 </script>
 
 <template>
@@ -41,55 +29,48 @@ const saveProfile = () => {
             <div class="mainWidth">
                 <form @submit.prevent="saveProfile" class="profile-form">
                     <!-- Champs de profil -->
-                    <div class="form-group">
+                    <fieldset class="form-group">
                         <label for="firstName">Prénom</label>
                         <input type="text" id="firstName" v-model="userState.firstName" readonly>
-                    </div>
-                    <div class="form-group">
+                    </fieldset>
+
+                    <fieldset class="form-group">
                         <label for="lastName">Nom</label>
                         <input type="text" id="lastName" v-model="userState.lastName" readonly>
-                    </div>
-                    <div class="form-group">
+                    </fieldset>
+
+                    <fieldset class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" v-model="userState.email" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="role">Rôle</label>
-                        <input type="text" id="role" v-model="userState.role" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="avatar">Photo de profil</label>
-                        <input type="file" id="avatar" @change="handleAvatarChange">
-                        <img v-if="avatarFile" :src="avatarFile" alt="Avatar" class="avatar-preview">
-                    </div>
-                    <div class="form-group">
-                        <label>Genre</label>
-                        <div class="radio-group">
-                            <label>
-                                <input type="radio" value="male" v-model="gender"> Homme
-                            </label>
-                            <label>
-                                <input type="radio" value="female" v-model="gender"> Femme
-                            </label>
+                    </fieldset>
+
+                    <!-- User could select new avart from colllection -->
+                    <AuthenticationAvatar @selection="handleAvatarSelection"/>
+
+                    <!-- <fieldset class="form-group">
+                        <legend>Ma diet</legend>
+
+                        <div>
+                            <label for="radioVegan">Vegan</label>
+                            <input id="radioVegan" type="radio" value="vegan">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthdate">Date de naissance</label>
-                        <input type="date" id="birthdate" v-model="birthdate">
-                    </div>
-                    <div class="form-group">
-                        <label for="city">Ville</label>
-                        <input type="text" id="city" v-model="city">
-                    </div>
-                    <div class="form-group">
-                        <label for="about">À propos de moi</label>
-                        <textarea id="about" v-model="about"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="favouriteFood">Plat préféré</label>
-                        <textarea id="favouriteFood" v-model="favouriteFood"></textarea>
-                    </div>
-                    <button class="save-button">Enregistrer</button>
+                        <div>
+                            <label for="radioVegan">Veggie</label>
+                            <input id="radioVegggie" type="radio" value="veggie">
+                        </div>
+                        <div>
+                            <label for="radioOmnivorous">Omnivore</label>
+                            <input id="radioOmnivorous" type="radio" value="omnivorous">
+                        </div>
+                        <div>
+                            <label for="radioCarnivorous">Carnivore</label>
+                            <input id="radioCarnivorous" type="radio" value="carnivore">
+                        </div>
+                    </fieldset> -->
+
+
+                    <!-- Button would save new data to profile -->
+                    <button class="save-button" @click="saveProfile">Enregistrer</button>
                 </form>
 
                 <!-- Bouton de déconnexion -->
