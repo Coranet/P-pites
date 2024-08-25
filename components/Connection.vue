@@ -24,8 +24,6 @@ async function handleSubmit(e) {
             frontEndAvatar: selectedAvararId.value
         }
 
-
-        console.log(userData)
         await $createUserAccount(userData);
     } else {
         await $userLogin(e.target.email.value, e.target.password.value);

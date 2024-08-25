@@ -21,6 +21,7 @@ export default defineNuxtPlugin(() => {
             readItem,
             getUserData,
             createUserAccount,
+            updateUserAccount, // not complete/functional
             logout,
             createItem,
             updateItem,
@@ -72,6 +73,11 @@ async function createUserAccount(userData ) {
         }
         console.log(error)
     }
+}
+
+async function updateUserAccount(userData) {
+    // update user data in backend (Directus)
+    // update userdata in composables/userData
 }
 
 async function getUserData() {

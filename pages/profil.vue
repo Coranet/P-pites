@@ -11,7 +11,7 @@ function handleAvatarSelection() {
 }
 
 function saveProfile() {
-    // Logique pour sauvegarder le profil mis à jour
+    // Logique pour sauvegarder le profil dans le backend Directus
 };
 
 onMounted(() => {
